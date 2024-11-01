@@ -1,0 +1,96 @@
+  {% extends 'base.html' %}
+
+  {% block title %}MyShop-Home{% endblock %}
+
+  {% block content %}
+  <div class="mb-4">
+      <label for="username" class="block text-gray-700 font-medium">
+          <ul>
+              {% for message in messages %}
+                  <li class='text-red-700 z-50' id='message' >{{ message }}</li>
+              {% endfor %}
+          </ul>
+      </label>
+
+  </div>
+  <!-- Header -->
+    <header class=" text-black py-4">
+      <h1 class="text-center text-3xl font-bold">Our Products</h1>
+    </header>
+
+    <!-- Product Categories -->
+    <section class="p-6">
+      <div class="container select-none mx-auto">
+        <h2 class="text-2xl font-semibold mb-6">Categories</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Category Card -->
+        {% for category in categories %}
+          <div class="bg-white rounded-lg cursor-pointer  shadow-md p-4">
+            <a  href="{% url 'category_products' category.id %}" class="text-lg font-semibold mb-2">{{ category.name }}</a>
+          </div>
+        {% endfor %} 
+        
+  </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="p-6">
+  
+      <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold mb-6">Featured Products {{hello}}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          
+          <!-- Product Card -->
+          {%for product in products%}
+          <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-5 object-cover transform ">
+            <img src="{{ product.image.url }}" alt="Product" class="w-full h-64 object-cover rounded-lg mb-5">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ product.name }}</h3>
+            <p class="text-gray-700 font-medium mb-3">${{ product.prize }}</p>
+            <p class="text-gray-600 text-sm mb-4">{{ product.description }}</p>
+            <button  class="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-2 rounded-lg transition-colors duration-200">
+                <a href="{% url 'add_to_cart' product.id%}">Add to Cart</a>
+            </button>
+        </div>
+        
+      
+          {%endfor%}
+          
+          
+          {% comment %} <div class="bg-white rounded-lg shadow-md p-4">
+            <img src="https://via.placeholder.com/150" alt="Product" class="w-full h-48 object-cover rounded-md mb-4">
+            <h3 class="text-lg font-semibold">Product Name 2</h3>
+            <p class="text-gray-600 mb-2">$49.99</p>
+            <button class="w-full bg-blue-600 text-white py-2 rounded-md">Add to Cart</button>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md p-4">
+            <img src="https://via.placeholder.com/150" alt="Product" class="w-full h-48 object-cover rounded-md mb-4">
+            <h3 class="text-lg font-semibold">Product Name 3</h3>
+            <p class="text-gray-600 mb-2">$19.99</p>
+            <button class="w-full bg-blue-600 text-white py-2 rounded-md">Add to Cart</button>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md p-4">
+            <img src="https://via.placeholder.com/150" alt="Product" class="w-full h-48 object-cover rounded-md mb-4">
+            <h3 class="text-lg font-semibold">Product Name 4</h3>
+            <p class="text-gray-600 mb-2">$39.99</p>
+            <button class="w-full bg-blue-600 text-white py-2 rounded-md">Add to Cart</button>
+          </div> {% endcomment %}
+
+        </div>
+      </div>
+    </section>
+
+
+  <script>
+      const messageElement = document.getElementById('message');
+      messageElement.style.display = 'block'; // Show the message
+
+      // Hide the message after 5 seconds
+      setTimeout(() => {
+          messageElement.style.display = 'none'; // Hide the message
+      }, 5000); // 5000 milliseconds = 5 seconds
+  </script>
+  {% endblock %}

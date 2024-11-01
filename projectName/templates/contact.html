@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us | MyShop{% endblock %}
+
+{% block content %}
+<div class="text-center py-10">
+    <h2 class="text-4xl font-semibold text-gray-800">Contact Us</h2>
+    <p class="mt-4 text-gray-600">We would love to hear from you!</p>
+</div>
+<form  method="post" class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+    {% csrf_token %}
+    <div class="mb-4">
+        <label for="username" class="block text-gray-700 font-medium">
+            <ul>
+                {% for message in messages %}
+                    <li class='text-red-700 z-50' id='message' >{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </label>
+    </div>
+    {% for field in form %}
+ 
+        <div class="fieldWrapper mb-4">
+
+            <label class="block text-gray-700 font-medium mb-2">{{ field.label_tag }}</label>
+            {{ field.errors }}
+            <div class="relative">
+                <input 
+                    type="{{ field.field.widget.input_type }}" 
+                    name="{{ field.name }}" 
+                    value="{{ field.value|default_if_none:'' }}" 
+                    class="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                    placeholder="{{ field.label }}" 
+                    {% if field.field.required %} required {% endif %}
+                >
+            </div>
+        </div>
+    {% endfor %}
+    <input type="submit" value="Submit" class="mt-4 w-full bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition duration-200">
+</form>
+{% endblock %}

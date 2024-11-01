@@ -1,0 +1,88 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}MyShop{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+  </head>
+
+  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+      <div
+        class="container mx-auto flex justify-between items-center py-4 px-6"
+      >
+        <a href="/" class="text-2xl font-semibold text-gray-800">MyShop</a>
+        <nav class="space-x-4">
+          <a href="/" class="text-gray-600 hover:text-blue-600">Home</a>
+          <a href="/shop" class="text-gray-600 hover:text-blue-600">Shop</a>
+          <a href="/about" class="text-gray-600 hover:text-blue-600"
+            >About Us</a
+          >
+          <a href="/contact" class="text-gray-600 hover:text-blue-600"
+            >Contact</a
+          >
+          {% if user.is_authenticated %}
+
+		  	<a href="{% url 'logout' %}">Logout</a>
+
+          {% else %}
+			<a href="{% url 'login' %}">Login</a>
+			<a href="{% url 'register' %}">Sign Up</a>  
+          {% endif %}
+          {% comment %} <a href="/register" class="text-gray-600 hover:text-blue-600"
+            >Sign Up
+          </a>
+          <a href="/login" class="text-gray-600 hover:text-blue-600">Login </a> {% endcomment %}
+        </nav>
+        <a href="{% url 'cart' %}" class="text-gray-600 hover:text-blue-600">
+          Cart
+          <span
+            class="ml-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs"
+            >0</span
+          >
+        </a>
+        <form method="get" class="flex items-center space-x-2">
+          <input
+            type="text"
+            name="q"
+            placeholder="Search products..."
+            class="px-4 py-2 w-64 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          />
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto py-10 px-6">
+      {% block content %}
+      <!-- Page-specific content will go here -->
+      {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+      <div class="container mx-auto text-center space-y-4">
+        <p>&copy; 2024 MyShop. All rights reserved.</p>
+        <nav class="space-x-4">
+          <a href="/terms" class="text-gray-400 hover:text-gray-200"
+            >Terms of Service</a
+          >
+          <a href="/privacy" class="text-gray-400 hover:text-gray-200"
+            >Privacy Policy</a
+          >
+          <a href="/faq" class="text-gray-400 hover:text-gray-200">FAQ</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
